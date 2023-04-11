@@ -14,7 +14,7 @@ const ShowTransactions = () => {
   const [transactions, setTransactions] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:8000/transaction/showAll")
+    fetch("http://staging-2023-03-30.pivottinc.com:8000/transaction/showAll")
       .then((response) => response.json())
       .then((data) => setTransactions(data))
       .catch((error) => console.log(error));
@@ -22,7 +22,7 @@ const ShowTransactions = () => {
 
   const handleDelete = (id) => {
     axios
-      .delete(`http://localhost:8000/transaction/delete/${id}`)
+      .delete(`http://staging-2023-03-30.pivottinc.com:8000/transaction/delete/${id}`)
       .then((res) => {
         console.log(res.data);
         setTransactions(transactions.filter((t) => t.id !== id));

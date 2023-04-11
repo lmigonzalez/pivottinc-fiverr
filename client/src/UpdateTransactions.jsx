@@ -118,7 +118,7 @@ const UpdateTransactions = () => {
     // Fetch the current user's information and update the form fields
     const fetchUser = async () => {
       try {
-        const response = await axios.get("http://localhost:8000/auth/user", {
+        const response = await axios.get("http://staging-2023-03-30.pivottinc.com:8000/auth/user", {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -140,7 +140,7 @@ const UpdateTransactions = () => {
     // Fetch the current user's information and update the form fields
     
       axios
-      .get(`http://localhost:8000/transaction/show/${transactionId}`, {
+      .get(`http://staging-2023-03-30.pivottinc.com:8000/transaction/show/${transactionId}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -165,7 +165,7 @@ const UpdateTransactions = () => {
 
     setValidated(true);
     axios
-      .put(`http://localhost:8000/transaction/update/${transactionId}`, formValues, {
+      .put(`http://staging-2023-03-30.pivottinc.com:8000/transaction/update/${transactionId}`, formValues, {
         headers: { Authorization: `Bearer ${token}` }, // send the token through the headers
       })
       .then((response) => {

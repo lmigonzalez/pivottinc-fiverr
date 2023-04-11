@@ -1,7 +1,7 @@
 export const signin = async (user) => {
   // console.log(name, email, password);
   try {
-    const response = await fetch(`http://localhost:8000/auth/login`, {
+    const response = await fetch(`http://staging-2023-03-30.pivottinc.com:8000/auth/login`, {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -36,7 +36,7 @@ export const signout = async (next) => {
     localStorage.removeItem("jwt");
     next();
     try {
-      const res = await fetch(`http://localhost:8000/auth/signout`, {
+      const res = await fetch(`http://staging-2023-03-30.pivottinc.com:8000/auth/signout`, {
         method: "POST",
       });
       console.log("SignOut", res);

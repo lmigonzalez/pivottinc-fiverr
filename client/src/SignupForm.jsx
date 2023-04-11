@@ -79,7 +79,7 @@ const SignupForm = () => {
 
     try {
       // Send POST request to backend server
-      await axios.post("http://localhost:8000/auth/signup", {
+      await axios.post("http://staging-2023-03-30.pivottinc.com:8000/auth/signup", {
         name,
         email,
         password,

@@ -17,7 +17,7 @@ const Dashboard = () => {
     // Fetch the current user's information and update the form fields
     const fetchUser = async () => {
       try {
-        const response = await axios.get("http://localhost:8000/auth/user", {
+        const response = await axios.get("http://staging-2023-03-30.pivottinc.com:8000/auth/user", {
           headers: {
             Authorization: `Bearer ${token}`,
           },
