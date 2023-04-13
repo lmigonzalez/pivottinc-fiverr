@@ -1,3 +1,5 @@
+const jwt = require("jsonwebtoken");
+
 // middleware function to check if user is logged in
 function checkAuth(req, res, next) {
   try {
