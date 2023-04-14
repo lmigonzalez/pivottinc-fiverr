@@ -39,6 +39,7 @@ connection.connect(function (err) {
     street_address VARCHAR(255) NOT NULL,
     city VARCHAR(255) NOT NULL,
     state VARCHAR(255) NOT NULL,
+    zip_code VARCHAR(255) NOT NULL,
     property_tax_id_number VARCHAR(255) NOT NULL,
     lot VARCHAR(255) NOT NULL,
     block VARCHAR(255) NOT NULL,
@@ -76,7 +77,6 @@ connection.connect(function (err) {
 // routes
 app.use("/auth", authRoutes);
 app.use("/transaction", transactionRoutes);
-
 
 // start server
 app.listen(port, () => {

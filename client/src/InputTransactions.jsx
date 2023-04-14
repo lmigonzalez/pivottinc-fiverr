@@ -74,6 +74,7 @@ const InputTransactions = () => {
     street_address: "",
     city: "",
     state: "",
+    zip_code: "",
     property_tax_id_number: "",
     lot: "",
     block: "",
@@ -161,6 +162,7 @@ const InputTransactions = () => {
              street_address: "",
              city: "",
              state: "",
+             zip_code: "",
              property_tax_id_number: "",
              lot: "",
              block: "",
@@ -273,7 +275,44 @@ const transactionForm = () => (
           </Form.Control.Feedback>
         </InputGroup>
       </Form.Group>
-      <Form.Group as={Col} md="4" name="state">
+      <Form.Group
+        as={Col}
+        md="3"
+        controlId="validationCustom02"
+        className="mt-2 mb-2"
+      >
+        <Form.Label>Street Address</Form.Label>
+        <Form.Control
+          required
+          type="text"
+          placeholder="Street Address"
+          value={formValues.street_address}
+          name="street_address"
+          onChange={handleChange}
+        />
+        <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+      </Form.Group>
+
+      <Form.Group
+        as={Col}
+        md="3"
+        controlId="validationCustom03"
+        className="mt-2 mb-2"
+      >
+        <Form.Label>City</Form.Label>
+        <Form.Control
+          type="text"
+          placeholder="City"
+          value={formValues.city}
+          name="city"
+          onChange={handleChange}
+          required
+        />
+        <Form.Control.Feedback type="invalid">
+          Please provide a valid city.
+        </Form.Control.Feedback>
+      </Form.Group>
+      <Form.Group as={Col} md="3" name="state">
         <Form.Label>State</Form.Label>
         <Form.Select
           onChange={handleChange}
@@ -296,37 +335,17 @@ const transactionForm = () => (
       </Form.Group>
       <Form.Group
         as={Col}
-        md="4"
-        controlId="validationCustom03"
-        className="mt-2 mb-2"
-      >
-        <Form.Label>City</Form.Label>
-        <Form.Control
-          type="text"
-          placeholder="City"
-          value={formValues.city}
-          name="city"
-          onChange={handleChange}
-          required
-        />
-        <Form.Control.Feedback type="invalid">
-          Please provide a valid city.
-        </Form.Control.Feedback>
-      </Form.Group>
-
-      <Form.Group
-        as={Col}
-        md="4"
+        md="3"
         controlId="validationCustom02"
         className="mt-2 mb-2"
       >
-        <Form.Label>Street Address</Form.Label>
+        <Form.Label>Zip Code</Form.Label>
         <Form.Control
           required
           type="text"
-          placeholder="Street Address"
-          value={formValues.street_address}
-          name="street_address"
+          placeholder="Zip Code"
+          value={formValues.zip_code}
+          name="zip_code"
           onChange={handleChange}
         />
         <Form.Control.Feedback>Looks good!</Form.Control.Feedback>

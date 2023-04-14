@@ -37,6 +37,7 @@ router.post("/inputs", verifyToken, (req, res) => {
     street_address,
     city,
     state,
+    zip_code,
     property_tax_id_number,
     lot,
     block,
@@ -72,6 +73,7 @@ router.post("/inputs", verifyToken, (req, res) => {
     !street_address ||
     !city ||
     !state ||
+    !zip_code ||
     !property_tax_id_number ||
     !lot ||
     !block ||
@@ -110,6 +112,7 @@ router.post("/inputs", verifyToken, (req, res) => {
     street_address,
     city,
     state,
+    zip_code,
     property_tax_id_number,
     lot,
     block,
@@ -137,7 +140,7 @@ router.post("/inputs", verifyToken, (req, res) => {
     lender_contact_last_name,
     lender_contact_email,
     lender_contact_phone_number
-  ) VALUES (?,?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?,?)`;
+  ) VALUES (?,?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?,?)`;
 
   const values = [
     user_id,
@@ -146,6 +149,7 @@ router.post("/inputs", verifyToken, (req, res) => {
     street_address,
     city,
     state,
+    zip_code,
     property_tax_id_number,
     lot,
     block,
@@ -222,6 +226,7 @@ router.put("/update/:id", verifyToken, (req, res) => {
     street_address,
     city,
     state,
+    zip_code,
     property_tax_id_number,
     lot,
     block,
@@ -263,6 +268,7 @@ router.put("/update/:id", verifyToken, (req, res) => {
                 street_address = ?,
                 city = ?,
                 state = ?,
+                zip_code = ?,
                 property_tax_id_number = ?,
                 lot = ?,
                 block = ?,
@@ -298,6 +304,7 @@ router.put("/update/:id", verifyToken, (req, res) => {
     street_address,
     city,
     state,
+    zip_code,
     property_tax_id_number,
     lot,
     block,
