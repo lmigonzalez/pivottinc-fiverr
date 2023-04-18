@@ -8,6 +8,7 @@ import Dashboard from "./Dashboard";
 import ShowTransactions from "./ShowTransactions";
 import UpdateTransactions from "./UpdateTransactions";
 import PrivateRoute from "./PrivateRoute";
+import Form from "./form";
 
 const Myroutes = () => {
   const PrivateDashboardRoute = () => (
@@ -15,6 +16,12 @@ const Myroutes = () => {
       <Dashboard />
     </PrivateRoute>
   );
+  const PrivateFromRoute = () => (
+    <PrivateRoute>
+      <Form />
+    </PrivateRoute>
+  );
+
   const PrivateCreateRoute = () => (
     <PrivateRoute>
       <InputTransactions />
@@ -50,6 +57,7 @@ const Myroutes = () => {
           exact
           component={PrivateUpdateRoute}
         />
+        <Route path="/form" exact component={PrivateFromRoute} />
       </Switch>
     </BrowserRouter>
   );

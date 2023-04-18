@@ -18,7 +18,11 @@ const Menu = ({ history }) => (
           Home{" "}
         </Link>
       </li>
-
+      <li className="nav-item ">
+        <Link className="nav-link" to="/form" style={isActive(history, "/form")}>
+          form
+        </Link>
+      </li>
     
 
      
@@ -42,6 +46,7 @@ const Menu = ({ history }) => (
               Signup{" "}
             </Link>
           </li>
+          
         </Fragment>
       )}
       {isAuthenticated() && (
