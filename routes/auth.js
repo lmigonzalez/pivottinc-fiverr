@@ -3,7 +3,7 @@ const mysql = require("mysql");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const router = express.Router();
-const { checkAuth } = require ("../middlewares/auth.js");
+const { checkAuth } = require("../middlewares/auth.js");
 
 // create connection to mysql database
 const connection = mysql.createConnection({
@@ -17,11 +17,10 @@ const nameRegex = /^[a-zA-Z]{2,}(?: [a-zA-Z]+){0,2}$/;
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 // const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
 
-
 // example route that requires authentication
-router.get('/protected', checkAuth, (req, res) => {
+router.get("/protected", checkAuth, (req, res) => {
   res.status(200).json({
-    message: 'You are logged in'
+    message: "You are logged in",
   });
 });
 
@@ -33,8 +32,8 @@ router.post("/login", (req, res) => {
   // check for empty fields
   if (!email || !password) {
     return res.status(400).json({ error: "Please enter email and password" });
-    }
-    
+  }
+
   // check if email exists in database
   connection.query(
     "SELECT * FROM users WHERE email = ?",
@@ -106,7 +105,6 @@ router.post("/signup", (req, res) => {
     "SELECT * FROM users WHERE email = ?",
     [email],
     function (error, results, fields) {
-     
       // If a user with the email already exists, send an error response
       if (results.length > 0) {
         return res.status(400).json({ error: "Email already in use" });
@@ -167,8 +165,6 @@ router.get("/user", verifyToken, function (req, res) {
     }
   );
 });
-
-
 
 router.post("/signout", (req, res) => {
   // Clear the JWT token from the client-side cookie or local storage
