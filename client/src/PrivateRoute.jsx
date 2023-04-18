@@ -4,9 +4,9 @@ import { isAuthenticated } from "./auth/index";
 const PrivateRoute = ({ children }) => {
   const token = isAuthenticated().token;
 
-  // if (!token) {
-  //   return <Redirect to="/" />;
-  // }
+  if (!token) {
+    return <Redirect to="/" />;
+  }
   return children;
 };
 export default PrivateRoute;
