@@ -1,6 +1,23 @@
 import React,{ useState } from "react"
 import Layout from "./Layout";
 
+const submit = async (values) => {
+  // console.log(name, email, password);
+  try {
+    const response = await fetch(`http://staging-2023-03-30.pivottinc.com:8000/profiles/new`, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(values),
+    });
+    return await response.json();
+  } catch (err) {
+    console.log(err);
+  }
+};
+
 const Form = () => {
     const [values, setValues] = useState({
         firstName: "",
@@ -64,10 +81,9 @@ const Form = () => {
                         className="form-control"
                         value={values.username}
                     />
-                </div>
-                {/* {error && <div style={{ color: "red" }}>{error}</div>} */}
+                </div>               
                 <div className="text-center">
-                    <button onClick={()=>{}} className="mt-3 btn btn-outline-dark ">
+                    <button onClick={submit(values)} className="mt-3 btn btn-outline-dark ">
                         {" "}
                         submit
                     </button>
