@@ -8,7 +8,7 @@ import Dashboard from "./Dashboard";
 import ShowTransactions from "./ShowTransactions";
 import UpdateTransactions from "./UpdateTransactions";
 import PrivateRoute from "./PrivateRoute";
-import Form from "./form";
+import Form from "./Form";
 
 const Myroutes = () => {
   const PrivateDashboardRoute = () => (

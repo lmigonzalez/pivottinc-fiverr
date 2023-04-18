@@ -4,43 +4,35 @@ const router = express.Router();
 const { checkAuth } = require('../middlewares/auth.js');
 const jwt = require('jsonwebtoken');
 
+// create connection to mysql database
 const connection = mysql.createConnection({
-  host: '127.0.0.1',
-  user: 'root',
-  database: 'profiles',
-  password: 'password',
+  host: process.env.host,
+  user: process.env.user,
+  password: process.env.password,
+  database: process.env.database,
 });
-
-connection.connect((err) => {
-	if (err) {
-		console.error('error connecting: ' + err.stack);
-    return;
-  }
-});
-
 
 // middleware function to verify JWT token
 function verifyToken(req, res, next) {
-	const authHeader = req.headers.authorization;
-	if (!authHeader) {
-	  return res.status(401).json({ error: "Unauthorized" });
-	}
-  
-	const token = authHeader.split(" ")[1];
-	jwt.verify(token, "secret-key", function (err, decoded) {
-	  if (err) {
-		return res.status(401).json({ error: "Unauthorized" });
-	  }
-	  req.userId = decoded.userId;
-	  next();
-	});
+  const authHeader = req.headers.authorization;
+  if (!authHeader) {
+    return res.status(401).json({ error: 'Unauthorized' });
   }
 
+  const token = authHeader.split(' ')[1];
+  jwt.verify(token, 'secret-key', function (err, decoded) {
+    if (err) {
+      return res.status(401).json({ error: 'Unauthorized' });
+    }
+    req.userId = decoded.userId;
+    next();
+  });
+}
 
 //   include the middleware
 
-router.post('/new', async (req, res) => {
-  console.log(req.body);
+router.post('/new', verifyToken, async (req, res) => {
+  console.log(req.headers.authorization);
 
   const { first_name, last_name, dob, gender, username } = req.body;
 
@@ -50,7 +42,6 @@ router.post('/new', async (req, res) => {
   }
 
   try {
-	
     const sql = `INSERT INTO users (
 			first_name, last_name, dob, gender, username
 			) VALUES (?, ?, ?, ?, ?)`;
@@ -66,7 +57,6 @@ router.post('/new', async (req, res) => {
       }
     });
   } catch (err) {
-	
     res.status(404).json({
       message: err,
     });
