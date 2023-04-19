@@ -9,6 +9,7 @@ import ShowTransactions from "./ShowTransactions";
 import UpdateTransactions from "./UpdateTransactions";
 import PrivateRoute from "./PrivateRoute";
 import Form from "./Form";
+import Admin from "./Admin";
 
 const Myroutes = () => {
   const PrivateDashboardRoute = () => (
@@ -19,6 +20,11 @@ const Myroutes = () => {
   const PrivateFromRoute = () => (
     <PrivateRoute>
       <Form />
+    </PrivateRoute>
+  );
+   const AdminRoute = () => (
+    <PrivateRoute>
+      <Admin />
     </PrivateRoute>
   );
 
@@ -58,6 +64,7 @@ const Myroutes = () => {
           component={PrivateUpdateRoute}
         />
         <Route path="/form" exact component={PrivateFromRoute} />
+        <Route path="/admin" exact component={AdminRoute} />
       </Switch>
     </BrowserRouter>
   );

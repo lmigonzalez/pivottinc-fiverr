@@ -23,6 +23,11 @@ const Menu = ({ history }) => (
           form
         </Link>
       </li>
+      <li className="nav-item ">
+        <Link className="nav-link" to="/admin" style={isActive(history, "/admin")}>
+          admin
+        </Link>
+      </li>
     
 
      
