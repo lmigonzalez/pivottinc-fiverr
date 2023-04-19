@@ -20,8 +20,8 @@ function verifyToken(req, res, next) {
   }
 
   const token = authHeader.split(' ')[1];
-  jwt.verify(token, 'secret-key', function (err, decoded) {
-    if (err) {
+  jwt.verify(token, 'secret-key', function (error, decoded) {
+    if (error) {
       return res.status(401).json({ error: 'Unauthorized' });
     }
     req.userId = decoded.userId;
@@ -30,6 +30,25 @@ function verifyToken(req, res, next) {
 }
 
 //   include the middleware
+
+router.get('/', async (req, res) => {
+  try {
+    const q = 'SELECT * FROM users';
+    connection.query(q, async (error, result) => {
+      if (error) {
+        res.status(404).json({
+          message: error,
+        });
+        return;
+      }
+      res.status(200).json(result);
+    });
+  } catch (error) {
+    res.status(404).json({
+      message: error,
+    });
+  }
+});
 
 router.post('/new', verifyToken, async (req, res) => {
   console.log(req.headers.authorization);
@@ -48,17 +67,83 @@ router.post('/new', verifyToken, async (req, res) => {
 
     const values = [first_name, last_name, dob, gender, username];
 
-    connection.query(sql, values, (err, result) => {
-      if (err) {
-        console.error(err);
+    connection.query(sql, values, (error, result) => {
+      if (error) {
+        console.error(error);
         return res.status(500).json({ error: 'Failed to create transaction.' });
       } else {
         return res.status(200).json(result);
       }
     });
-  } catch (err) {
+  } catch (error) {
     res.status(404).json({
-      message: err,
+      message: error,
+    });
+  }
+});
+
+router.get('/get-user/:id', (req, res) => {
+  const id = req.params.id;
+  let q = 'SELECT * FROM cards WHERE UserId = ?';
+  try {
+    connection.query(q, [id], (error, result) => {
+      if (error) {
+        res.status(404).json({
+          message: error,
+        });
+        return;
+      }
+      res.status(200).json(result);
+    });
+  } catch (error) {
+    res.status(404).json({
+      message: error,
+    });
+  }
+});
+
+router.patch('/update-user', (req, res) => {
+  const { first_name, last_name, dob, gender, username, Id } = req.body;
+  const q =
+    'UPDATE users SET first_name = ?, last_name = ?, dob = ?, gender = ?, username = ? WHERE ID = ?';
+
+  try {
+    connection.query(
+      q,
+      [first_name, last_name, dob, gender, username, Id],
+      (error, result) => {
+        if (error) {
+          res.status(404).json({
+            message: error,
+          });
+          return;
+        }
+        res.status(200).json(result);
+      }
+    );
+  } catch (error) {
+    res.status(404).json({
+      message: error,
+    });
+  }
+});
+
+router.delete('/delete-user', (req, res) => {
+  const id = req.body.id;
+  const q = 'DELETE FROM users WHERE ID = ?';
+  try {
+    connection.query(q, [id], (error, result) => {
+      if (error) {
+        res.status(404).json({
+          message: error,
+        });
+        return;
+      }
+      res.status(200).json(result);
+    });
+  } catch (error) {
+    res.status(404).json({
+      message: error,
     });
   }
 });
