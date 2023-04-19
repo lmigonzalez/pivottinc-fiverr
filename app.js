@@ -12,7 +12,9 @@ const profiles = require("./routes/profile")
 const cors = require("cors");
 const app = express();
 
-const port = process.env.PORT || 8000;
+// const port = process.env.PORT || 8008;
+const port = 8008;
+
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -20,12 +22,14 @@ app.use(morgan("dev"));
 app.use(cookieParser());
 app.use(cors());
 
+
+
 // create connection to mysql database
 const connection = mysql.createConnection({
   host: process.env.host,
   user: process.env.user,
   password: process.env.password,
-  database: process.env.database,
+  database: process.env.database,s
 });
 
 

@@ -5,11 +5,20 @@ const { checkAuth } = require('../middlewares/auth.js');
 const jwt = require('jsonwebtoken');
 
 // create connection to mysql database
+// const connection = mysql.createConnection({
+//   host: '127.0.0.1',
+//   port: '3306',
+//   user: 'root',
+//   password: 'password',
+//   database: 'profiles',
+// });
+
 const connection = mysql.createConnection({
   host: process.env.host,
   user: process.env.user,
   password: process.env.password,
   database: process.env.database,
+  s,
 });
 
 // middleware function to verify JWT token
@@ -31,9 +40,9 @@ function verifyToken(req, res, next) {
 
 //   include the middleware
 
-router.get('/', async (req, res) => {
+router.get('/', verifyToken, async (req, res) => {
   try {
-    const q = 'SELECT * FROM users';
+    const q = 'SELECT * FROM profiles';
     connection.query(q, async (error, result) => {
       if (error) {
         res.status(404).json({
@@ -41,6 +50,7 @@ router.get('/', async (req, res) => {
         });
         return;
       }
+
       res.status(200).json(result);
     });
   } catch (error) {
@@ -61,7 +71,7 @@ router.post('/new', verifyToken, async (req, res) => {
   }
 
   try {
-    const sql = `INSERT INTO users (
+    const sql = `INSERT INTO profiles (
 			first_name, last_name, dob, gender, username
 			) VALUES (?, ?, ?, ?, ?)`;
 
@@ -82,35 +92,36 @@ router.post('/new', verifyToken, async (req, res) => {
   }
 });
 
-router.get('/get-user/:id', (req, res) => {
-  const id = req.params.id;
-  let q = 'SELECT * FROM cards WHERE UserId = ?';
-  try {
-    connection.query(q, [id], (error, result) => {
-      if (error) {
-        res.status(404).json({
-          message: error,
-        });
-        return;
-      }
-      res.status(200).json(result);
-    });
-  } catch (error) {
-    res.status(404).json({
-      message: error,
-    });
-  }
-});
+// router.get('/get-user/:id', verifyToken, (req, res) => {
+//   const id = req.params.id;
+//   let q = 'SELECT * FROM cards WHERE UserId = ?';
+//   try {
+//     connection.query(q, [id], (error, result) => {
+//       if (error) {
+//         res.status(404).json({
+//           message: error,
+//         });
+//         return;
+//       }
+//       res.status(200).json(result);
+//     });
+//   } catch (error) {
+//     res.status(404).json({
+//       message: error,
+//     });
+//   }
+// });
 
-router.patch('/update-user', (req, res) => {
-  const { first_name, last_name, dob, gender, username, Id } = req.body;
+router.patch('/update-user', verifyToken, (req, res) => {
+  console.log(req.body);
+  const { first_name, last_name, dob, gender, username, id } = req.body;
   const q =
-    'UPDATE users SET first_name = ?, last_name = ?, dob = ?, gender = ?, username = ? WHERE ID = ?';
+    'UPDATE profiles SET first_name = ?, last_name = ?, dob = ?, gender = ?, username = ? WHERE ID = ?';
 
   try {
     connection.query(
       q,
-      [first_name, last_name, dob, gender, username, Id],
+      [first_name, last_name, dob, gender, username, id],
       (error, result) => {
         if (error) {
           res.status(404).json({
@@ -128,9 +139,9 @@ router.patch('/update-user', (req, res) => {
   }
 });
 
-router.delete('/delete-user', (req, res) => {
+router.delete('/delete-user', verifyToken, (req, res) => {
   const id = req.body.id;
-  const q = 'DELETE FROM users WHERE ID = ?';
+  const q = 'DELETE FROM profiles WHERE ID = ?';
   try {
     connection.query(q, [id], (error, result) => {
       if (error) {
